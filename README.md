@@ -1,6 +1,6 @@
 # ngx-debug
 
-[Chrome extension download link](https://chrome.google.com/webstore/detail/fdajeibbknpjholibfbbbnidpibgeejh) (currently pending approval)
+[Chrome extension download link](https://chrome.google.com/webstore/detail/fdajeibbknpjholibfbbbnidpibgeejh)
 
 A simple Chrome extension which exposes a subset Angular's debugging APIs in a more concise interface, to make it easier
 to quickly check and set component state from the DevTools Console.
