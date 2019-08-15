@@ -1,6 +1,6 @@
 {
     "name": "ngx-debug",
-    "version": "0.1",
+    "version": "0.2",
     "description": "Shortcuts for debugging Angular applications",
     "background": {
         "scripts": [
