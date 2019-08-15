@@ -1,5 +1,9 @@
 (() => {
     function init() {
+        if (window.ngx) {
+            return;
+        }
+
         function subscribeComponentOutput(component, outputName, subscribe) {
             if (!subscribe) {
                 subscribe = value => console.log(`${outputName} => ${JSON.stringify(value)}`);
@@ -54,21 +58,31 @@
                 return ng.probe(el).injector.get(token);
             },
 
-            tick() {
-                return this.get(ng.coreTokens.ApplicationRef).tick();
+            get appRef() {
+                return this.get$('[ng-version]', ng.coreTokens.ApplicationRef);
             },
 
-            tick$(selector) {
-                return this.get$(selector, ng.coreTokens.ApplicationRef).tick();
+            tick() {
+                return this.appRef.tick();
             },
 
             in(inputName, value) {
-                this.c[inputName] = value;
+                if (typeof inputName === 'string') {
+                    this.c[inputName] = value;
+                } else {
+                    Object.assign(this.c, inputName);
+                }
+
                 this.tick();
             },
 
             in$(selector, inputName, value) {
-                this.c$(selector)[inputName] = value;
+                if (typeof inputName === 'string') {
+                    this.c$(selector)[inputName] = value;
+                } else {
+                    Object.assign(this.c$(selector), inputName);
+                }
+
                 this.tick();
             },
 
@@ -78,8 +92,18 @@
 
             out$(selector, outputName, subscribe) {
                 subscribeComponentOutput(this.c$(selector), outputName, subscribe);
+            },
+
+            get table() {
+                console.table(ngx.c);
+            },
+
+            table$(selector) {
+                console.table(ngx.c$(selector));
             }
         };
+
+        Object.defineProperty(window, 'ngxc', {get: () => window.ngx.c});
     }
 
     const script = document.createElement('script');
